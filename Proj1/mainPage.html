@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<form action="Script.php">
+
+<input type = text   name="ucid" placeholder="Enter the ucid"  autocomplete="off" required> Enter u	<br>
+<input type = text   name="pass" placeholder="Enter the password" autocomplete="off" required> Enter p   	<br><br>
+<input type=text name="account"  > account<br> 
+  	<select id="choose" name = "choose" onchange = F()>
+        <option value = 'c'> Choose </option>
+        <option value = 'r'> See </option>
+        <option value = 't'> Transaction </option>
+        <option value = 'cl'> Clear </option>
+    </select>
+    <br><br>
+    <div id = "amount">
+        <input type =text name="amount"> Enter transact amount<br>
+
+    </div><br><br>
+<input type = submit>
+</form>
+
+<style>	
+
+
+	div   {   border-style: solid;     
+  border-color: red;
+    display: none;    }
+
+
+</style>
+
+ <script type="text/javascript">
+  document.getElementById('choose').value = "<?php echo $_GET['choose'];?>";
+</script>
+<script>
+    "use strict"
+    var choose = document.getElementById("choose")
+    var ptrAmount = document.getElementById("amount")
+    ptrAmount.addEventListener("blur", F)
+    function F(){
+        if (choose.value =="t"){ptrAmount.style.display='block'}
+        else{ptrAmount.style.display='none'}
+    }
+</script>
