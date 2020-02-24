@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+		
+<script type = "text/javascript"> 
+$(document).ready( function(){
+ 
+   $("button").click(function(){ 
+   
+     var zip = $("#zip").val();
+	 
+     if(zip != ''){
+         
+		 $.ajax({
+             type: 		"GET",
+             url: 		"weather-0.php",
+             data: 		"zip="+zip,
+             
+		     beforeSend: function(){ 		
+			                  $("#B").html("Gathering weather...");                },
+         
+			 error: 		function(xhr, status, error) {  
+							  alert( "Error Mesaage:  \r\nNumeric code is: "  + xhr.status + " \r\nError is " + error);   },
+			 
+			 success: 	function(result){
+				  
+				r = JSON.parse(result);
+				
+				res =  "<br><br>" +
+				       "<br>City: "			  + r.name+  " "				  +		/* name property 			*/
+					   "<br>Temperature: " 	  + r.main.temp + "&deg;C "		  +		/* main's temp 				*/
+				       "<br>Weather: " 		  + r.weather[0].main + " "		  +		/* weather's main property 	*/
+					   "<br>Sunrise/epoch: "  + r.sys.sunrise + " "			  +
+					   "<br>Description: "  + r.weather[0].description + " "			  +
+					    "<br>Wind speed: "     + r.wind.speed + " "           +   
+                       "<br>Humidity: " + r.main.humidity + "% "              + 
+                        "<br>Icon: "  + r.weather[0].icon + " "			  +
+                       "<br><br>";
+                      
+				$("#B").html(res); 
+				
+			}	//success  - the bracket } closes the definition of function(result){ ... }
+		});	    //ajax     - the }) closes the  $.ajax({ ...  })  
+     };			//the bracket }  closes the if(zip != '')  {  ....  }
+  });			//anonymous fn handler for button: click(function(){ })
+});				//the  })  closes ready event handler:  ready( function(){ ... })
+     
+function is_usZipCode(str)
+{
+ regexp = /^[0-9]{5}(?:-[0-9]{4})?$/;
+  
+        if (regexp.test(str))
+          {
+            return true;
+          }
+        else
+          {
+            return false;
+          }
+}
+
+</script>
+<style> #C { margin: auto; border-radius: 15px; width: 50%; border: 2px solid blue; padding: 15px; } </style>
+</head>
+
+<body>
+<br><br>
+<div id="C">
+<h1> Weather Report</h1>   
+<input 	id = "zip" type = "number" name = "zip" placeholder="Zipcode" autocomplete="off" min="0" required>
+<button id = "btn" type = "BUTTON" ><b>REQUEST WEATHER</b></button><br><br>
+<div id= "B"></div>
+<pre> 
+	Enter zip code.
+</pre>
+</body>
+</div>
+</html>
